@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Reso Shaft</title>
+<link rel="stylesheet" href="assets/css/style.css" type="text/css">
+<script src="assets/js/bootstrap.js" type="text/javascript"></script>
+<script src="assets/js/paper.js" type="text/javascript"></script>
+<style type="text/css" media="screen">
+ <!--
+body {
+ height: 100%;
+ padding: 0;
+ margin: 0;
+ font-family: Verdana, Arial, Helvetica, sans-serif;
+} 
+#centered {
+ position: absolute;
+ 
+ left: 30%;
+ width: 30%;
+ height: 25px;
+ background-color: #CCCCCC;
+ padding-top: 5px;
+ padding-left: 50px;
+ min-width: 450px;
+} 
+-->
+</style>
+</head>
+<body>
+<script type="text/paperscript" canvas="canvas">
+
+var myPath;
+var cocks = [];
+
+tool.minDistance = 50;
+
+function onMouseDrag(event) {
+	myPath = new Path();
+	myPath.strokeColor = 'black';
+	myPath.strokeWidth = 20;
+	myPath.strokeCap = 'round'; 
+	myPath.add(event.point);
+	myPath.add(event.point + event.delta * 0.7);
+
+	var step = event.delta.rotate(90);
+	step.length = 10;
+	var left = event.point + step;
+	var right = event.point - step;
+
+	var circle1 = new Path.Circle(left, 15);
+	circle1.fillColor = 'black';
+
+	var circle2 = new Path.Circle(right, 15);
+	circle2.fillColor = 'black';
+
+	// var gradient = new Gradient(['yellow', 'red', 'blue']);
+	// var gradientColor = new GradientColor(gradient, event.point,event.point+event.delta * 0.3,event.point+event.delta * 0.9);
+
+
+	var group = new Group([myPath, circle1, circle2]);
+	cocks.push(group);
+}
+
+function onFrame(event) {
+	for(var i = 0; i<cocks.length;i++){
+		if (cocks[i].opacity > 0.01) cocks[i].opacity -= 0.01;
+	}
+}
+
+</script>
+<div id="centered"> 
+  Two trolls playing with <a href="http://paperjs.org/"> paper.js</a> on <a href="http://resonate.io/">resonate</a>! Click and drag!
+</div>
+<div class="canvas"><canvas id="canvas" resize></canvas></div>
+</div>
