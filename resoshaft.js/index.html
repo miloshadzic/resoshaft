@@ -64,9 +64,14 @@ function onMouseDrag(event) {
 }
 
 function onFrame(event) {
-	for(var i = 0; i<cocks.length;i++){
-		if (cocks[i].opacity > 0.01) cocks[i].opacity -= 0.01;
-	}
+  for(var i = 0; i<cocks.length;i++){
+    if (cocks[i].opacity > 0.01) {
+      cocks[i].opacity -= 0.01;
+      } else {
+      cocks[i].opacity = 0;
+      cocks.splice(i, 1);
+    }
+  }
 }
 
 </script>
